@@ -13,21 +13,24 @@ public class Assignment2 {
 
 		// Saving the result of the method into a variable to be called later
 		int theRandomNumber = creatingRandomNumber(1, 100);
+		System.out.println(theRandomNumber);
 
 		Scanner userGuess = new Scanner(System.in);
-		String userInput = userGuess.nextLine();
-		Integer userInputInteger = Integer.parseInt(userInput);
 		
-		int numberOfTries = 4;
+		
+		int numberOfTries = 5;
+		
+		boolean hasUserWon = false; // assuming the user has lost (initializing)
+		
 		
 		while (numberOfTries > 0) {
-			
+			Integer userInputInteger = userGuess.nextInt();
 			if (isWithinRange(userInputInteger) == true) {
-				if (isGoodUserInput(theRandomNumber, userInputInteger) == false) {
-					userInputInteger = userGuess.nextInt();
+				if (isGoodUserInput(theRandomNumber, userInputInteger, numberOfTries) == false) {
 					numberOfTries = numberOfTries - 1;
 				}
 				else { //Win the game
+					hasUserWon = true;
 					break;
 				}
 			}
@@ -36,7 +39,7 @@ public class Assignment2 {
 			}
 		}
 		
-		if (numberOfTries == 0) {
+		if (numberOfTries == 0 && hasUserWon == false) {
 			System.out.println("You lose!");
 			System.out.println("The number to guess was " + theRandomNumber);
 		}
@@ -52,11 +55,14 @@ public class Assignment2 {
 
 	}
 
-	public static boolean isGoodUserInput(int theRandomNumber, int userInput) {
+	public static boolean isGoodUserInput(int theRandomNumber, int userInput, int numberOfTries) {
 	// This method validates for within range input and prompts to guess higher or lower
 		if (userInput == theRandomNumber) {
 			System.out.println("You win!");
 			return true;
+		}
+		else if (numberOfTries == 1) {
+			return false;
 		} else if (userInput > theRandomNumber) {
 			System.out.println("Please pick a lower number");
 			return false;

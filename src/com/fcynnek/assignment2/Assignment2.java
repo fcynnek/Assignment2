@@ -34,7 +34,7 @@ public class Assignment2 {
 					break;
 				}
 			}
-			else { //If the guess was not within range
+			else if (isWithinRange(numberOfTries) == false) { //If the guess was not within range
 				userInputInteger = userGuess.nextInt();
 			}
 		}
